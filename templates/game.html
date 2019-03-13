@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tic Tac Toe</title>
+        <style>
+            table {
+                border-collapse: collapse;
+            }
+            td {
+                border: 1px solid black;
+                width: 150px;
+                height: 150px;
+                font-size: 30px;
+                text-align: center;
+            }
+            td > a {
+                font-size: 18px;
+            }
+	    .flashes {
+		padding: 0;
+	    }
+	    .flashes > li {
+		padding: 5px;
+		font-size: 150%;
+	    }
+	    .success {
+	   	background: green;
+		color: #eee;
+	    }
+	    .warning {
+		background: yellow;
+		color: #555;
+	    }
+        </style>
+    </head>
+    <body>
+	{% with messages = get_flashed_messages(with_categories=True) %}
+	    {% if messages %}
+	    	<ul class="flashes">
+	        {% for message in messages %}
+		<li class="{{ message[0] }}">{{ message[1] }}</li>
+		{% endfor %}
+	    	</ul>
+	    {% endif %}
+	{% endwith %}
+
+        <table>
+            {% for i in range(3) %}
+                <tr>
+                    {% for j in range(3) %}
+                        <td>
+                            {% if game[i][j] %}
+                                {{ game[i][j] }}
+                            {% else %}
+                                <a href="{{ url_for('play', row=i, col=j) }}">Play {{ turn }} here.</a>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+
+	<a href="/reset">Reset</a>
+    </body>
+</html>
